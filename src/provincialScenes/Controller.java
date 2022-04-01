@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -25,6 +26,28 @@ public class Controller implements Initializable {
 	private Stage primaryStage;
 	private Scene scene;
 	private Parent root;
+	
+	// Text fields for DriverScene
+	@FXML
+	private TextField LicenseTextField;
+	@FXML
+	private TextField RegistrationTextField;
+	@FXML
+	private TextField DriverFNTextField;
+	@FXML
+	private TextField DriverLNTextField;
+	@FXML
+	private CheckBox LicenseSuspendedCB;//driver
+	@FXML
+	private CheckBox LicenseRevokedCB;//driver
+	@FXML
+	private CheckBox OutstandingWarrantsCB;//driver
+	@FXML
+	private CheckBox VRegisteredCB;//vehicle
+	@FXML
+	private CheckBox VStolenCB;//vehicle
+	@FXML
+	private CheckBox VWantedCB;//vehicle
 
 	public void VehicleInfoScreen(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("ProvincialVehicleScene.fxml"));
@@ -32,6 +55,7 @@ public class Controller implements Initializable {
 		scene = new Scene(root, 900, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
 	}
 
 	public void DriverInfoScreen(ActionEvent e) throws IOException {
@@ -50,16 +74,6 @@ public class Controller implements Initializable {
 		return primaryStage;
 	}
 
-	// Text fields for DriverScene
-	@FXML
-	private TextField LicenseTextField;
-	@FXML
-	private TextField RegistrationTextField;
-	@FXML
-	private TextField DriverFNTextField;
-	@FXML
-	private TextField DriverLNTextField;
-
 	// File>Exit
 	public void Exit(ActionEvent e) {
 		Platform.exit();
@@ -70,7 +84,7 @@ public class Controller implements Initializable {
 		ConnectionClass connectionClass = new ConnectionClass();
 		Connection connection = connectionClass.getConnection();
 
-		String pullQuery = "SELECT LicenseNumber FROM provincialgovernmenttable";
+		String pullQuery = "SELECT * FROM provincialgovernmenttable";
 
 		try {
 			Statement statement = connection.createStatement();
@@ -78,6 +92,15 @@ public class Controller implements Initializable {
 			
 			while(queryOutput.next()) {
 				LicenseTextField.setText(queryOutput.getString("LicenseNumber"));
+				RegistrationTextField.setText(queryOutput.getString("RegistrationNumber"));
+				DriverFNTextField.setText(queryOutput.getString("DriverFirstName"));
+				DriverLNTextField.setText(queryOutput.getString("DriverLastName"));
+				
+//				if (queryOutput.getInt("DStatusLicenseSuspended") == 1) {
+//					LicenseSuspendedCB.setSelected(true);
+//				}else if(queryOutput.getInt("DStatusLicenseSuspended") == 0) {
+//					LicenseSuspendedCB.setSelected(false);
+//				}
 			}
 				
 			
@@ -89,8 +112,8 @@ public class Controller implements Initializable {
 	public void RegistrationSearch(ActionEvent e) { // search button 2
 		ConnectionClass connectionClass = new ConnectionClass();
 		Connection connection = connectionClass.getConnection();
-
-		String pullQuery = "SELECT RegistrationNumber FROM provincialgovernmenttable";
+		
+		String pullQuery = "SELECT * FROM provincialgovernmenttable";
 
 		try {
 			Statement statement = connection.createStatement();
@@ -98,6 +121,9 @@ public class Controller implements Initializable {
 			
 			while(queryOutput.next()) {
 				RegistrationTextField.setText(queryOutput.getString("RegistrationNumber"));
+				LicenseTextField.setText(queryOutput.getString("LicenseNumber")); 
+				DriverFNTextField.setText(queryOutput.getString("DriverFirstName"));
+				DriverLNTextField.setText(queryOutput.getString("DriverLastName"));
 			}
 				
 			
@@ -112,11 +138,15 @@ public class Controller implements Initializable {
 	}
 
 	public void VehicleDiscard(ActionEvent e) {
-//		//For driver field 
-//		LicenseTextField.setText("");
-//		RegistrationTextField.setText("");
-//		DriverFNTextField.setText("");
-//		DriverLNTextField.setText("");
+		//For Vehicle field 
+		LicenseTextField.setText("");
+		RegistrationTextField.setText("");
+		DriverFNTextField.setText("");
+		DriverLNTextField.setText("");
+		VRegisteredCB.setSelected(false);//vehicle
+		VStolenCB.setSelected(false);//vehicle
+		VWantedCB.setSelected(false);//vehicle
+		
 	}
 
 	public void DriverUpdate(ActionEvent e) {
@@ -129,11 +159,14 @@ public class Controller implements Initializable {
 	}
 
 	public void DriverDiscard(ActionEvent e) {
-//		//For driver field 
-//		LicenseTextField.setText("");
-//		RegistrationTextField.setText("");
-//		DriverFNTextField.setText("");
-//		DriverLNTextField.setText("");
+		//For driver field 
+		LicenseTextField.setText("");
+		RegistrationTextField.setText("");
+		DriverFNTextField.setText("");
+		DriverLNTextField.setText("");
+		LicenseSuspendedCB.setSelected(false);//driver
+		LicenseRevokedCB.setSelected(false);//driver
+		OutstandingWarrantsCB.setSelected(false);//driver
 	}
 
 	@Override

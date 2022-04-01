@@ -42,16 +42,21 @@
          <children>
             <Label prefHeight="32.0" prefWidth="103.0" text="License: " />
             <Label prefHeight="32.0" prefWidth="103.0" text="Registration: " />
-            <Label text="Vehicle Status: " />
+            <Label text="Driver Name:" />
+            <Label text="Vehicle Status: ">
+               <padding>
+                  <Insets top="18.0" />
+               </padding></Label>
          </children>
       </VBox>
-      <VBox layoutX="211.0" layoutY="29.0" prefHeight="368.0" prefWidth="100.0" spacing="7.0">
+      <VBox layoutX="211.0" layoutY="29.0" prefHeight="146.0" prefWidth="100.0" spacing="7.0">
          <children>
-            <TextField fx:id="LicenseTextField" />
-            <TextField fx:id="RegistrationTextField" />
-            <CheckBox mnemonicParsing="false" text="Registered" />
-            <CheckBox mnemonicParsing="false" text="Stolen" />
-            <CheckBox mnemonicParsing="false" text="Wanted" />
+            <TextField fx:id="LicenseTextField" promptText="11111111" />
+            <TextField fx:id="RegistrationTextField" promptText="999999" />
+            <TextField fx:id="DriverFNTextField" promptText="First Name" />
+            <CheckBox fx:id="VRegisteredCB" mnemonicParsing="false" text="Registered" />
+            <CheckBox fx:id="VStolenCB" mnemonicParsing="false" text="Stolen" />
+            <CheckBox fx:id="VWantedCB" mnemonicParsing="false" text="Wanted" />
          </children>
       </VBox>
       <HBox layoutY="405.0" prefHeight="49.0" prefWidth="647.0" spacing="10.0">
@@ -82,14 +87,15 @@
                   <Font size="10.0" />
                </font>
             </Button>
+            <TextField fx:id="DriverLNTextField" promptText="Last Name" />
          </children>
       </VBox>
-      <Label layoutX="111.0" layoutY="97.0" prefHeight="80.0" prefWidth="197.0" text="Warrants &amp; Citations:">
+      <Label layoutX="50.0" layoutY="131.0" prefHeight="80.0" prefWidth="158.0" text="Warrants &amp; Citations:">
          <padding>
             <Insets top="65.0" />
          </padding>
       </Label>
-      <TableView layoutX="110.0" layoutY="179.0" prefHeight="232.0" prefWidth="526.0">
+      <TableView layoutX="51.0" layoutY="211.0" prefHeight="200.0" prefWidth="585.0">
         <columns>
           <TableColumn prefWidth="111.0" text="Name" />
           <TableColumn minWidth="0.0" prefWidth="167.0" text="Vehicle Warrants" />

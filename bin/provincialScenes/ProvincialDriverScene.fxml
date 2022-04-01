@@ -53,12 +53,12 @@
       </VBox>
       <VBox layoutX="204.0" layoutY="24.0" prefHeight="226.0" prefWidth="144.0" spacing="15.0">
          <children>
-            <TextField fx:id="LicenseTextField" promptText="N13679566" />
-            <TextField fx:id="RegistrationTextField" promptText="XY77889954321" />
+            <TextField fx:id="LicenseTextField" promptText="11111111" />
+            <TextField fx:id="RegistrationTextField" promptText="999999" />
             <TextField fx:id="DriverFNTextField" promptText="First Name" />
-            <CheckBox mnemonicParsing="false" prefHeight="17.0" prefWidth="129.0" text="License Suspended" />
-            <CheckBox mnemonicParsing="false" text="License Revoked" />
-            <CheckBox mnemonicParsing="false" text="Outstanding Warrants" />
+            <CheckBox fx:id="LicenseSuspendedCB" mnemonicParsing="false" prefHeight="17.0" prefWidth="129.0" text="License Suspended" />
+            <CheckBox fx:id="LicenseRevokedCB" mnemonicParsing="false" text="License Revoked" />
+            <CheckBox fx:id="OutstandingWarrantsCB" mnemonicParsing="false" text="Outstanding Warrants" />
          </children>
          <padding>
             <Insets top="7.0" />
