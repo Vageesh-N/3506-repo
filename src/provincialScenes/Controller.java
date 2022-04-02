@@ -3,10 +3,12 @@ package provincialScenes;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import connectivity.ConnectionClass;
 import javafx.application.Platform;
@@ -26,8 +28,6 @@ public class Controller implements Initializable {
 	private Stage primaryStage;
 	private Scene scene;
 	private Parent root;
-	
-	// Text fields for DriverScene
 	@FXML
 	private TextField LicenseTextField;
 	@FXML
@@ -37,17 +37,17 @@ public class Controller implements Initializable {
 	@FXML
 	private TextField DriverLNTextField;
 	@FXML
-	private CheckBox LicenseSuspendedCB;//driver
+	private CheckBox LicenseSuspendedCB;// driver
 	@FXML
-	private CheckBox LicenseRevokedCB;//driver
+	private CheckBox LicenseRevokedCB;// driver
 	@FXML
-	private CheckBox OutstandingWarrantsCB;//driver
+	private CheckBox OutstandingWarrantsCB;// driver
 	@FXML
-	private CheckBox VRegisteredCB;//vehicle
+	private CheckBox VRegisteredCB;// vehicle
 	@FXML
-	private CheckBox VStolenCB;//vehicle
+	private CheckBox VStolenCB;// vehicle
 	@FXML
-	private CheckBox VWantedCB;//vehicle
+	private CheckBox VWantedCB;// vehicle
 
 	public void VehicleInfoScreen(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("ProvincialVehicleScene.fxml"));
@@ -55,7 +55,7 @@ public class Controller implements Initializable {
 		scene = new Scene(root, 900, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
+
 	}
 
 	public void DriverInfoScreen(ActionEvent e) throws IOException {
@@ -79,54 +79,174 @@ public class Controller implements Initializable {
 		Platform.exit();
 	}
 
-	public void LicenseSearch(ActionEvent e) { // search button 1
-		
+//Driver License Search
+	public void DLicenseSearch(ActionEvent e) { // search button 1
+
 		ConnectionClass connectionClass = new ConnectionClass();
 		Connection connection = connectionClass.getConnection();
-
-		String pullQuery = "SELECT * FROM provincialgovernmenttable";
+		String pullQuery = "SELECT * FROM provincialgovernmenttable WHERE LicenseNumber =?";
 
 		try {
-			Statement statement = connection.createStatement();
-			ResultSet queryOutput = statement.executeQuery(pullQuery);
-			
-			while(queryOutput.next()) {
+			PreparedStatement pst = connection.prepareStatement(pullQuery);
+			pst.setString(1, LicenseTextField.getText());
+			ResultSet queryOutput = pst.executeQuery();
+
+			while (queryOutput.next()) {
 				LicenseTextField.setText(queryOutput.getString("LicenseNumber"));
 				RegistrationTextField.setText(queryOutput.getString("RegistrationNumber"));
 				DriverFNTextField.setText(queryOutput.getString("DriverFirstName"));
 				DriverLNTextField.setText(queryOutput.getString("DriverLastName"));
-				
-//				if (queryOutput.getInt("DStatusLicenseSuspended") == 1) {
-//					LicenseSuspendedCB.setSelected(true);
-//				}else if(queryOutput.getInt("DStatusLicenseSuspended") == 0) {
-//					LicenseSuspendedCB.setSelected(false);
-//				}
+
+				if (queryOutput.getBoolean("DStatusLicenseSuspended") == true) {
+					LicenseSuspendedCB.setSelected(true);
+				} else if (queryOutput.getBoolean("DStatusLicenseSuspended") == false) {
+					LicenseSuspendedCB.setSelected(false);
+				}
+
+				if (queryOutput.getBoolean("DStatusLicenseRevoked") == true) {
+					LicenseRevokedCB.setSelected(true);
+				} else if (queryOutput.getBoolean("DStatusLicenseRevoked") == false) {
+					LicenseRevokedCB.setSelected(false);
+				}
+
+				if (queryOutput.getBoolean("DStatusLicenseSuspended") == true) {
+					LicenseSuspendedCB.setSelected(true);
+				} else if (queryOutput.getBoolean("DStatusLicenseSuspended") == false) {
+					LicenseSuspendedCB.setSelected(false);
+				}
 			}
-				
-			
+
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
 	}
 
-	public void RegistrationSearch(ActionEvent e) { // search button 2
+	// Vehicle License Search
+	public void VLicenseSearch(ActionEvent e) { // search button 1
+
 		ConnectionClass connectionClass = new ConnectionClass();
 		Connection connection = connectionClass.getConnection();
-		
-		String pullQuery = "SELECT * FROM provincialgovernmenttable";
+
+		String pullQuery = "SELECT * FROM provincialgovernmenttable WHERE LicenseNumber =?";
 
 		try {
-			Statement statement = connection.createStatement();
-			ResultSet queryOutput = statement.executeQuery(pullQuery);
-			
-			while(queryOutput.next()) {
+			PreparedStatement pst = connection.prepareStatement(pullQuery);
+			pst.setString(1, LicenseTextField.getText());
+			ResultSet queryOutput = pst.executeQuery();
+
+			while (queryOutput.next()) {
+				LicenseTextField.setText(queryOutput.getString("LicenseNumber"));
 				RegistrationTextField.setText(queryOutput.getString("RegistrationNumber"));
-				LicenseTextField.setText(queryOutput.getString("LicenseNumber")); 
 				DriverFNTextField.setText(queryOutput.getString("DriverFirstName"));
 				DriverLNTextField.setText(queryOutput.getString("DriverLastName"));
+
+				if (queryOutput.getBoolean("VstatusRegistered") == true) {
+					VRegisteredCB.setSelected(true);
+				} else if (queryOutput.getBoolean("VstatusRegistered") == false) {
+					VRegisteredCB.setSelected(false);
+				}
+
+				if (queryOutput.getBoolean("VStatusStolen") == true) {
+					VStolenCB.setSelected(true);
+				} else if (queryOutput.getBoolean("VStatusStolen") == false) {
+					VStolenCB.setSelected(false);
+				}
+
+				if (queryOutput.getBoolean("VStatusWanted") == true) {
+					VWantedCB.setSelected(true);
+				} else if (queryOutput.getBoolean("VStatusWanted") == false) {
+					VWantedCB.setSelected(false);
+
+				}
 			}
-				
+
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+	}
+
+	// Driver Registration Search
+	public void DRegistrationSearch(ActionEvent e) { // search button 2
+		ConnectionClass connectionClass = new ConnectionClass();
+		Connection connection = connectionClass.getConnection();
+
+		String pullQuery = "SELECT * FROM provincialgovernmenttable WHERE RegistrationNumber =?";
+
+		try {
+			PreparedStatement pst = connection.prepareStatement(pullQuery);
+			pst.setString(1, RegistrationTextField.getText());
+			ResultSet queryOutput = pst.executeQuery();
+
+			while (queryOutput.next()) {
+				RegistrationTextField.setText(queryOutput.getString("RegistrationNumber"));
+				LicenseTextField.setText(queryOutput.getString("LicenseNumber"));
+				DriverFNTextField.setText(queryOutput.getString("DriverFirstName"));
+				DriverLNTextField.setText(queryOutput.getString("DriverLastName"));
+
+				if (queryOutput.getBoolean("DStatusLicenseSuspended") == true) {
+					LicenseSuspendedCB.setSelected(true);
+				} else if (queryOutput.getBoolean("DStatusLicenseSuspended") == false) {
+					LicenseSuspendedCB.setSelected(false);
+				}
+
+				if (queryOutput.getBoolean("DStatusLicenseRevoked") == true) {
+					LicenseRevokedCB.setSelected(true);
+				} else if (queryOutput.getBoolean("DStatusLicenseRevoked") == false) {
+					LicenseRevokedCB.setSelected(false);
+				}
+
+				if (queryOutput.getBoolean("DStatusLicenseSuspended") == true) {
+					LicenseSuspendedCB.setSelected(true);
+				} else if (queryOutput.getBoolean("DStatusLicenseSuspended") == false) {
+					LicenseSuspendedCB.setSelected(false);
+				}
+			}
+
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+
+	}
+
+	// Vehicle Registration Search
+	public void VRegistrationSearch(ActionEvent e) { // search button 2
+		ConnectionClass connectionClass = new ConnectionClass();
+		Connection connection = connectionClass.getConnection();
+
+		String pullQuery = "SELECT * FROM provincialgovernmenttable WHERE RegistrationNumber =?";
+
+		try {
 			
+			PreparedStatement pst = connection.prepareStatement(pullQuery);
+			pst.setString(1, RegistrationTextField.getText());
+			ResultSet queryOutput = pst.executeQuery();
+
+			while (queryOutput.next()) {
+				RegistrationTextField.setText(queryOutput.getString("RegistrationNumber"));
+				LicenseTextField.setText(queryOutput.getString("LicenseNumber"));
+				DriverFNTextField.setText(queryOutput.getString("DriverFirstName"));
+				DriverLNTextField.setText(queryOutput.getString("DriverLastName"));
+
+				if (queryOutput.getBoolean("VstatusRegistered") == true) {
+					VRegisteredCB.setSelected(true);
+				} else if (queryOutput.getBoolean("VstatusRegistered") == false) {
+					VRegisteredCB.setSelected(false);
+				}
+
+				if (queryOutput.getBoolean("VStatusStolen") == true) {
+					VStolenCB.setSelected(true);
+				} else if (queryOutput.getBoolean("VStatusStolen") == false) {
+					VStolenCB.setSelected(false);
+				}
+
+				if (queryOutput.getBoolean("VStatusWanted") == true) {
+					VWantedCB.setSelected(true);
+				} else if (queryOutput.getBoolean("VStatusWanted") == false) {
+					VWantedCB.setSelected(false);
+
+				}
+			}
+
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
@@ -138,35 +258,30 @@ public class Controller implements Initializable {
 	}
 
 	public void VehicleDiscard(ActionEvent e) {
-		//For Vehicle field 
+		// For Vehicle field
 		LicenseTextField.setText("");
 		RegistrationTextField.setText("");
 		DriverFNTextField.setText("");
 		DriverLNTextField.setText("");
-		VRegisteredCB.setSelected(false);//vehicle
-		VStolenCB.setSelected(false);//vehicle
-		VWantedCB.setSelected(false);//vehicle
-		
+		VRegisteredCB.setSelected(false);// vehicle
+		VStolenCB.setSelected(false);// vehicle
+		VWantedCB.setSelected(false);// vehicle
+
 	}
 
 	public void DriverUpdate(ActionEvent e) {
 
-
-//		 LicenseTextField.getText();
-//		 RegistrationTextField.getText();
-//		 DriverFNTextField.getText();
-//		 DriverLNTextField.getText();
 	}
 
 	public void DriverDiscard(ActionEvent e) {
-		//For driver field 
+		// For driver field
 		LicenseTextField.setText("");
 		RegistrationTextField.setText("");
 		DriverFNTextField.setText("");
 		DriverLNTextField.setText("");
-		LicenseSuspendedCB.setSelected(false);//driver
-		LicenseRevokedCB.setSelected(false);//driver
-		OutstandingWarrantsCB.setSelected(false);//driver
+		LicenseSuspendedCB.setSelected(false);// driver
+		LicenseRevokedCB.setSelected(false);// driver
+		OutstandingWarrantsCB.setSelected(false);// driver
 	}
 
 	@Override
