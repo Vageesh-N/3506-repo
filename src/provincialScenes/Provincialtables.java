@@ -1,66 +1,99 @@
 package provincialScenes;
 
 public class Provincialtables {
-	String Licensefield, MovingVehicleViolationfield, MovingVehicleWarningfield, ArrestWarrantStatusfield,
-			AmountDuefield, dateCreatedfield;
+	
 
-	public Provincialtables(String licensefield, String movingVehicleViolationfield, String movingVehicleWarningfield,
-			String arrestWarrantStatusfield, String amountDuefield, String dateCreatedfield) {
+	String LicenseNum, MovingVehicleViolations, MovingVehicleWarnings, ArrestWarrantStatus,
+	AmountDue, dateCreated, RegistrationNum, ParkingViolations, FixitTicketStatus;
+
+	public Provincialtables(String licenseNum, String movingVehicleViolations, String movingVehicleWarnings,
+			String arrestWarrantStatus, String amountDue, String dateCreated, String registrationNum,
+			String parkingViolations, String fixitTicketStatus) {
 		super();
-		Licensefield = licensefield;
-		MovingVehicleViolationfield = movingVehicleViolationfield;
-		MovingVehicleWarningfield = movingVehicleWarningfield;
-		ArrestWarrantStatusfield = arrestWarrantStatusfield;
-		AmountDuefield = amountDuefield;
-		this.dateCreatedfield = dateCreatedfield;
+		LicenseNum = licenseNum;
+		MovingVehicleViolations = movingVehicleViolations;
+		MovingVehicleWarnings = movingVehicleWarnings;
+		ArrestWarrantStatus = arrestWarrantStatus;
+		AmountDue = amountDue;
+		this.dateCreated = dateCreated;
+		RegistrationNum = registrationNum;
+		ParkingViolations = parkingViolations;
+		FixitTicketStatus = fixitTicketStatus;
 	}
 
-	public String getLicensefield() {
-		return Licensefield;
+	public String getLicenseNum() {
+		return LicenseNum;
 	}
 
-	public void setLicensefield(String licensefield) {
-		Licensefield = licensefield;
+	public void setLicenseNum(String licenseNum) {
+		LicenseNum = licenseNum;
 	}
 
-	public String getMovingVehicleViolationfield() {
-		return MovingVehicleViolationfield;
+	public String getMovingVehicleViolations() {
+		return MovingVehicleViolations;
 	}
 
-	public void setMovingVehicleViolationfield(String movingVehicleViolationfield) {
-		MovingVehicleViolationfield = movingVehicleViolationfield;
+	public void setMovingVehicleViolations(String movingVehicleViolations) {
+		MovingVehicleViolations = movingVehicleViolations;
 	}
 
-	public String getMovingVehicleWarningfield() {
-		return MovingVehicleWarningfield;
+	public String getMovingVehicleWarnings() {
+		return MovingVehicleWarnings;
 	}
 
-	public void setMovingVehicleWarningfield(String movingVehicleWarningfield) {
-		MovingVehicleWarningfield = movingVehicleWarningfield;
+	public void setMovingVehicleWarnings(String movingVehicleWarnings) {
+		MovingVehicleWarnings = movingVehicleWarnings;
 	}
 
-	public String getArrestWarrantStatusfield() {
-		return ArrestWarrantStatusfield;
+	public String getArrestWarrantStatus() {
+		return ArrestWarrantStatus;
 	}
 
-	public void setArrestWarrantStatusfield(String arrestWarrantStatusfield) {
-		ArrestWarrantStatusfield = arrestWarrantStatusfield;
+	public void setArrestWarrantStatus(String arrestWarrantStatus) {
+		ArrestWarrantStatus = arrestWarrantStatus;
 	}
 
-	public String getAmountDuefield() {
-		return AmountDuefield;
+	public String getAmountDue() {
+		return AmountDue;
 	}
 
-	public void setAmountDuefield(String amountDuefield) {
-		AmountDuefield = amountDuefield;
+	public void setAmountDue(String amountDue) {
+		AmountDue = amountDue;
 	}
 
-	public String getDateCreatedfield() {
-		return dateCreatedfield;
+	public String getDateCreated() {
+		return dateCreated;
 	}
 
-	public void setDateCreatedfield(String dateCreatedfield) {
-		this.dateCreatedfield = dateCreatedfield;
+	public void setDateCreated(String dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
+	public String getRegistrationNum() {
+		return RegistrationNum;
+	}
+
+	public void setRegistrationNum(String registrationNum) {
+		RegistrationNum = registrationNum;
+	}
+
+	public String getParkingViolations() {
+		return ParkingViolations;
+	}
+
+	public void setParkingViolations(String parkingViolations) {
+		ParkingViolations = parkingViolations;
+	}
+
+	public String getFixitTicketStatus() {
+		return FixitTicketStatus;
+	}
+
+	public void setFixitTicketStatus(String fixitTicketStatus) {
+		FixitTicketStatus = fixitTicketStatus;
+	}
+
+	
+
+	
 }

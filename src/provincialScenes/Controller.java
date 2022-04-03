@@ -12,6 +12,8 @@ import java.util.function.Function;
 
 import connectivity.ConnectionClass;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +33,7 @@ public class Controller implements Initializable {
 	private Stage primaryStage;
 	private Scene scene;
 	private Parent root;
-	
+
 	// FIELDS
 	@FXML
 	private TextField LicenseTextField;
@@ -74,7 +76,8 @@ public class Controller implements Initializable {
 	private TableColumn<Provincialtables, String> ParkingViolationsfield;
 	@FXML
 	private TableColumn<Provincialtables, String> FixitTicketStatusfield;
-
+	// for our tableview import
+	private ObservableList<Provincialtables> oblist = FXCollections.observableArrayList();
 
 	public void VehicleInfoScreen(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("ProvincialVehicleScene.fxml"));
@@ -281,10 +284,6 @@ public class Controller implements Initializable {
 
 	}
 
-	public void VehicleUpdate(ActionEvent e) {
-
-	}
-
 	public void VehicleDiscard(ActionEvent e) {
 		// For Vehicle field
 		LicenseTextField.setText("");
@@ -297,8 +296,12 @@ public class Controller implements Initializable {
 
 	}
 
-	public void DriverUpdate(ActionEvent e) {
+	public void VehicleUpdate(ActionEvent e) {
+		//not needed for our functionality
+	}
 
+	public void DriverUpdate(ActionEvent e) {
+		//not needed for our functionality
 	}
 
 	public void DriverDiscard(ActionEvent e) {
@@ -314,20 +317,33 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		try {
+			ConnectionClass connectionClass = new ConnectionClass();
+			Connection con = connectionClass.getConnection();
+			ResultSet rs = con.createStatement().executeQuery("SELECT * from localgovernmenttable");
 
-			Licensefield.setCellValueFactory(new PropertyValueFactory<>("Licensefield"));
-			MovingVehicleViolationfield.setCellValueFactory(new PropertyValueFactory<>("MovingVehicleViolationfield"));
-			MovingVehicleWarningfield.setCellValueFactory(new PropertyValueFactory<>("MovingVehicleWarningfield"));
-			ArrestWarrantStatusfield.setCellValueFactory(new PropertyValueFactory<>("ArrestWarrantStatusfield"));
-			AmountDuefield.setCellValueFactory(new PropertyValueFactory<>("AmountDuefield"));
-			dateCreatedfield.setCellValueFactory(new PropertyValueFactory<>("dateCreatedfield"));
-			Registrationfield.setCellValueFactory(new PropertyValueFactory<>("Registrationfield"));
-			ParkingViolationsfield.setCellValueFactory(new PropertyValueFactory<>("ParkingViolationsfield"));
-			FixitTicketStatusfield.setCellValueFactory(new PropertyValueFactory<>("FixitTicketStatusfield"));
+			while (rs.next()) {
+				oblist.add(new Provincialtables(rs.getString("LicenseNum"), rs.getString("MovingVehicleViolations"),
+						rs.getString("MovingVehicleWarnings"), rs.getString("ArrestWarrantStatus"),
+						rs.getString("AmountDue"), rs.getString("dateCreated"), rs.getString("RegistrationNum"),
+						rs.getString("ParkingViolations"), rs.getString("FixitTicketStatus")));
+			}
 
-		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
+		Licensefield.setCellValueFactory(new PropertyValueFactory<>("LicenseNum"));
+		MovingVehicleViolationfield.setCellValueFactory(new PropertyValueFactory<>("MovingVehicleViolations"));
+		MovingVehicleWarningfield.setCellValueFactory(new PropertyValueFactory<>("MovingVehicleWarnings"));
+		ArrestWarrantStatusfield.setCellValueFactory(new PropertyValueFactory<>("ArrestWarrantStatus"));
+		AmountDuefield.setCellValueFactory(new PropertyValueFactory<>("AmountDue"));
+		dateCreatedfield.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
+		Registrationfield.setCellValueFactory(new PropertyValueFactory<>("RegistrationNum"));
+		ParkingViolationsfield.setCellValueFactory(new PropertyValueFactory<>("ParkingViolations"));
+		FixitTicketStatusfield.setCellValueFactory(new PropertyValueFactory<>("FixitTicketStatus"));
+
+		Provincialtables.setItems(oblist);
 
 	}
 }
