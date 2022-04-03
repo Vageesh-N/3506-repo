@@ -85,13 +85,14 @@
             <Insets left="5.0" top="7.0" />
          </padding>
       </VBox>
-      <TableView layoutX="109.0" layoutY="250.0" prefHeight="295.0" prefWidth="646.0">
+      <TableView fx:id="DrivingRecordTable" layoutX="109.0" layoutY="250.0" prefHeight="295.0" prefWidth="664.0">
         <columns>
-          <TableColumn prefWidth="112.0" text="License" />
-          <TableColumn prefWidth="99.0" text="Registration" />
-            <TableColumn minWidth="0.0" prefWidth="142.0" text="Name" />
-            <TableColumn prefWidth="127.0" text="Driver Status" />
-            <TableColumn prefWidth="164.0" text="Vehicle Status" />
+          <TableColumn fx:id="Licensefield" prefWidth="112.0" text="License" />
+          <TableColumn fx:id="MovingVehicleViolationfield" prefWidth="142.0" text="MovingVehicleViolation" />
+            <TableColumn fx:id="MovingVehicleWarningfield" minWidth="0.0" prefWidth="137.0" text="MovingVehicleWarning" />
+            <TableColumn fx:id="ArrestWarrantStatusfield" prefWidth="122.0" text="ArrestWarrantStatus" />
+            <TableColumn fx:id="AmountDuefield" prefWidth="76.0" text="AmountDue" />
+            <TableColumn fx:id="dateCreatedfield" prefWidth="74.0" text="dateCreated" />
         </columns>
       </TableView>
       <HBox layoutY="544.0" prefHeight="38.0" prefWidth="773.0" spacing="5.0">

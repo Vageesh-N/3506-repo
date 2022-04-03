@@ -95,12 +95,13 @@
             <Insets top="65.0" />
          </padding>
       </Label>
-      <TableView layoutX="51.0" layoutY="211.0" prefHeight="200.0" prefWidth="585.0">
+      <TableView fx:id="WarrantsandCitationsTable" layoutX="51.0" layoutY="211.0" prefHeight="200.0" prefWidth="585.0">
         <columns>
-          <TableColumn prefWidth="111.0" text="Name" />
-          <TableColumn minWidth="0.0" prefWidth="167.0" text="Vehicle Warrants" />
-            <TableColumn prefWidth="180.0" text="Moving Vehicle Citation" />
-            <TableColumn minWidth="0.0" prefWidth="65.0" text="Date" />
+          <TableColumn fx:id="Registrationfield" prefWidth="163.0" text="Registration #" />
+          <TableColumn fx:id="ParkingViolationsfield" minWidth="0.0" prefWidth="112.0" text="ParkingViolations" />
+            <TableColumn fx:id="FixitTicketStatusfield" prefWidth="104.0" text="FixitTicketStatus" />
+            <TableColumn fx:id="AmountDuefield" minWidth="0.0" prefWidth="121.0" text="AmountDue" />
+            <TableColumn fx:id="dateCreatedfield" minWidth="0.0" prefWidth="84.0" text="dateCreated" />
         </columns>
       </TableView>
    </children>

@@ -20,6 +20,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -48,6 +50,36 @@ public class Controller implements Initializable {
 	private CheckBox VStolenCB;// vehicle
 	@FXML
 	private CheckBox VWantedCB;// vehicle
+	// TABLES
+	// DrivingRecordTable
+	@FXML
+	private TableView<Drivertable> DrivingRecordTable;
+	@FXML
+	private TableColumn<Drivertable, String> Licensefield;
+	@FXML
+	private TableColumn<Drivertable, String> MovingVehicleViolationfield;
+	@FXML
+	private TableColumn<Drivertable, String> MovingVehicleWarningfield;
+	@FXML
+	private TableColumn<Drivertable, String> ArrestWarrantStatusfield;
+	@FXML
+	private TableColumn<Drivertable, String> AmountDuefield;
+	@FXML
+	private TableColumn<Drivertable, String> dateCreatedfield;
+
+	// WarrantsandCitationsTable
+	@FXML
+	private TableView<?> WarrantsandCitationsTable;
+	@FXML
+	private TableColumn<?, ?> Registrationfield;
+	@FXML
+	private TableColumn<?, ?> ParkingViolationsfield;
+	@FXML
+	private TableColumn<?, ?> FixitTicketStatusfield;
+//	@FXML
+//	private TableColumn<?,?>AmountDuefield;
+//	@FXML
+//	private TableColumn<?,?>dateCreatedfield;
 
 	public void VehicleInfoScreen(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("ProvincialVehicleScene.fxml"));
@@ -216,7 +248,7 @@ public class Controller implements Initializable {
 		String pullQuery = "SELECT * FROM provincialgovernmenttable WHERE RegistrationNumber =?";
 
 		try {
-			
+
 			PreparedStatement pst = connection.prepareStatement(pullQuery);
 			pst.setString(1, RegistrationTextField.getText());
 			ResultSet queryOutput = pst.executeQuery();
