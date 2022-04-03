@@ -13,7 +13,7 @@ public class Main extends Application {
 	  try {
 	      Parent root = FXMLLoader.load(getClass().getResource("ProvincialDriverScene.fxml"));
 	      primaryStage.setTitle("Provincial Gov UI");
-	      Scene scene = new Scene(root, 900, 600);
+	      Scene scene = new Scene(root, 800, 600);
 	      primaryStage.setScene(scene);
 	      primaryStage.show();
 	      

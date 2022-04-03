@@ -23,6 +23,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class Controller implements Initializable {
@@ -30,6 +31,8 @@ public class Controller implements Initializable {
 	private Stage primaryStage;
 	private Scene scene;
 	private Parent root;
+	
+	// FIELDS
 	@FXML
 	private TextField LicenseTextField;
 	@FXML
@@ -51,40 +54,32 @@ public class Controller implements Initializable {
 	@FXML
 	private CheckBox VWantedCB;// vehicle
 	// TABLES
-	// DrivingRecordTable
 	@FXML
-	private TableView<Drivertable> DrivingRecordTable;
+	private TableView<Provincialtables> Provincialtables;
 	@FXML
-	private TableColumn<Drivertable, String> Licensefield;
+	private TableColumn<Provincialtables, String> Licensefield;
 	@FXML
-	private TableColumn<Drivertable, String> MovingVehicleViolationfield;
+	private TableColumn<Provincialtables, String> MovingVehicleViolationfield;
 	@FXML
-	private TableColumn<Drivertable, String> MovingVehicleWarningfield;
+	private TableColumn<Provincialtables, String> MovingVehicleWarningfield;
 	@FXML
-	private TableColumn<Drivertable, String> ArrestWarrantStatusfield;
+	private TableColumn<Provincialtables, String> ArrestWarrantStatusfield;
 	@FXML
-	private TableColumn<Drivertable, String> AmountDuefield;
+	private TableColumn<Provincialtables, String> AmountDuefield;
 	@FXML
-	private TableColumn<Drivertable, String> dateCreatedfield;
+	private TableColumn<Provincialtables, String> dateCreatedfield;
+	@FXML
+	private TableColumn<Provincialtables, String> Registrationfield;
+	@FXML
+	private TableColumn<Provincialtables, String> ParkingViolationsfield;
+	@FXML
+	private TableColumn<Provincialtables, String> FixitTicketStatusfield;
 
-	// WarrantsandCitationsTable
-	@FXML
-	private TableView<?> WarrantsandCitationsTable;
-	@FXML
-	private TableColumn<?, ?> Registrationfield;
-	@FXML
-	private TableColumn<?, ?> ParkingViolationsfield;
-	@FXML
-	private TableColumn<?, ?> FixitTicketStatusfield;
-//	@FXML
-//	private TableColumn<?,?>AmountDuefield;
-//	@FXML
-//	private TableColumn<?,?>dateCreatedfield;
 
 	public void VehicleInfoScreen(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("ProvincialVehicleScene.fxml"));
 		primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-		scene = new Scene(root, 900, 600);
+		scene = new Scene(root, 650, 450);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
@@ -93,9 +88,10 @@ public class Controller implements Initializable {
 	public void DriverInfoScreen(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("ProvincialDriverScene.fxml"));
 		primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-		scene = new Scene(root, 900, 600);
+		scene = new Scene(root, 800, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
 	}
 
 	public Scene getScene() {
@@ -318,7 +314,20 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		
+
+			Licensefield.setCellValueFactory(new PropertyValueFactory<>("Licensefield"));
+			MovingVehicleViolationfield.setCellValueFactory(new PropertyValueFactory<>("MovingVehicleViolationfield"));
+			MovingVehicleWarningfield.setCellValueFactory(new PropertyValueFactory<>("MovingVehicleWarningfield"));
+			ArrestWarrantStatusfield.setCellValueFactory(new PropertyValueFactory<>("ArrestWarrantStatusfield"));
+			AmountDuefield.setCellValueFactory(new PropertyValueFactory<>("AmountDuefield"));
+			dateCreatedfield.setCellValueFactory(new PropertyValueFactory<>("dateCreatedfield"));
+			Registrationfield.setCellValueFactory(new PropertyValueFactory<>("Registrationfield"));
+			ParkingViolationsfield.setCellValueFactory(new PropertyValueFactory<>("ParkingViolationsfield"));
+			FixitTicketStatusfield.setCellValueFactory(new PropertyValueFactory<>("FixitTicketStatusfield"));
+
+		
+
 
 	}
 }
