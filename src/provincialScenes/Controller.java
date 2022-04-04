@@ -78,6 +78,7 @@ public class Controller implements Initializable {
 	private TableColumn<Provincialtables, String> FixitTicketStatusfield;
 	// for our tableview import
 	private ObservableList<Provincialtables> oblist = FXCollections.observableArrayList();
+	private String updatequery;
 
 	public void VehicleInfoScreen(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("ProvincialVehicleScene.fxml"));
@@ -296,12 +297,90 @@ public class Controller implements Initializable {
 
 	}
 
+	// for our update/insert
+	private void UpdateQuery() {
+		updatequery = "INSERT INTO provincialgovernmenttable(LicenseNumber, RegistrationNumber, DriverFirstName, DriverLastName, DStatusLicenseSuspended, DStatusLicenseRevoked, DStatusOutstandingWarrants, VstatusRegistered, VStatusStolen, VStatusWanted) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+	}
+
+	private void driverinsert() {
+		ConnectionClass connectionClass = new ConnectionClass();
+		Connection iConnect = connectionClass.getConnection();
+		PreparedStatement preparedStatement;
+
+		try {
+
+			preparedStatement = iConnect.prepareStatement(updatequery);
+			preparedStatement.setString(1, LicenseTextField.getText());
+			preparedStatement.setString(2, RegistrationTextField.getText());
+			preparedStatement.setString(3, DriverFNTextField.getText());
+			preparedStatement.setString(4, DriverLNTextField.getText());
+			preparedStatement.setBoolean(5, LicenseSuspendedCB.isSelected());
+			preparedStatement.setBoolean(6, LicenseRevokedCB.isSelected());
+			preparedStatement.setBoolean(7, OutstandingWarrantsCB.isSelected());
+			preparedStatement.setString(8, "0");
+			preparedStatement.setString(9, "0");
+			preparedStatement.setString(10, "0");
+
+			// System.out.print("Error before execution");
+			preparedStatement.execute();
+
+			// System.out.print("Error after execution");
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	private void vehicleinsert() {
+		ConnectionClass connectionClass = new ConnectionClass();
+		Connection iConnect = connectionClass.getConnection();
+		PreparedStatement preparedStatement;
+
+		try {
+
+			preparedStatement = iConnect.prepareStatement(updatequery);
+			preparedStatement.setString(1, LicenseTextField.getText());
+			preparedStatement.setString(2, RegistrationTextField.getText());
+			preparedStatement.setString(3, DriverFNTextField.getText());
+			preparedStatement.setString(4, DriverLNTextField.getText());
+			preparedStatement.setString(5, "0");
+			preparedStatement.setString(6, "0");
+			preparedStatement.setString(7, "0");
+			preparedStatement.setBoolean(8, VRegisteredCB.isSelected());
+			preparedStatement.setBoolean(9, VStolenCB.isSelected());
+			preparedStatement.setBoolean(10, VWantedCB.isSelected());
+
+			// System.out.print("Error before execution");
+			preparedStatement.execute();
+
+			// System.out.print("Error after execution");
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
 	public void VehicleUpdate(ActionEvent e) {
-		//not needed for our functionality
+
+		try {
+			UpdateQuery();
+			vehicleinsert();
+		} catch (Exception ex) {
+			System.out.println("update failed");
+			ex.printStackTrace();
+		}
 	}
 
 	public void DriverUpdate(ActionEvent e) {
-		//not needed for our functionality
+		try {
+			UpdateQuery();
+			driverinsert();
+		} catch (Exception ex) {
+			System.out.println("update failed");
+			ex.printStackTrace();
+		}
+
 	}
 
 	public void DriverDiscard(ActionEvent e) {
